@@ -6,14 +6,15 @@ A [Horizon](https://playhorizon.dev) native mod that crafts straight from the
 recipe book, in the spirit of
 [OneClickCrafting](https://github.com/BreadMoirai/OneClickCrafting).
 
-- **Click a recipe** to place it and take the result into your inventory.
-- **Shift-click** a recipe to place a full grid and craft all of it.
-- **Hold the drop key (Q)** while clicking to drop the crafted items instead
-  (Shift drops a stack's worth).
-- **Hold Alt** while clicking for the vanilla placement without crafting.
-- **Enter/Space** repeats the last placed recipe — hold them and fastcraft
-  crafts each placement as it lands, in the inventory's 2x2 grid and the
-  crafting table alike, locally and on servers.
+- **Ctrl+click a recipe** to place it and take the result into your
+  inventory; without Ctrl a click is the vanilla placement.
+- **Ctrl+Shift+click** to keep crafting until the materials run out or the
+  inventory cannot hold another item.
+- **+ the drop key (Q)** to drop the crafted items: with Ctrl alone the one
+  result, with Ctrl+Shift whatever the inventory could not fit.
+- **Enter/Space** repeats the last placed recipe — Ctrl+Space crafts each
+  repeat as it lands, in the inventory's 2x2 grid and the crafting table
+  alike, locally and on servers.
 
 ## Layout
 

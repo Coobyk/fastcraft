@@ -4,23 +4,15 @@ fn fastcraft_placed(
     all: bool,
     placed: bool,
 ) -> bool {
-    // Alt is the bypass: an Alt click places the recipe, nothing more.
-    if !placed || game.has_alt_down() || game.active_book() != Some(BookType::Crafting) {
+    // Only a Ctrl click crafts; every other click is the vanilla placement.
+    if !placed || !game.has_control_down() || game.active_book() != Some(BookType::Crafting) {
         return placed;
     }
-    let expected: Vec<std::sync::Arc<str>> = game
-        .recipe_ui
-        .book
-        .as_ref()
-        .and_then(|book| book.entries.get(entry))
-        .map(|entry| {
-            entry
-                .results()
-                .iter()
-                .map(|result| result.item.clone())
-                .collect()
-        })
-        .unwrap_or_default();
+    let Some((expected, display)) =
+        crate::game::recipe_book::fastcraft_book::expected(game, entry)
+    else {
+        return placed;
+    };
     if expected.is_empty() {
         return placed;
     }
@@ -29,7 +21,7 @@ fn fastcraft_placed(
     let drop = game
         .physical_keys
         .contains(&winit::keyboard::KeyCode::KeyQ);
-    crate::game::fastcraft::arm(expected, drop, all);
+    crate::game::fastcraft::arm(expected, display, all, drop);
     // A local world has the grid filled already; a server's answer lands on
     // a later tick (`tick`).
     crate::game::fastcraft::fire(game);

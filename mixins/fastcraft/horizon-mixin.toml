@@ -38,3 +38,9 @@ id = "runtime"
 file = "crates/horizon-client/src/game.rs"
 name = "fastcraft"
 source = "fastcraft.rs"
+
+[[module]]
+id = "book"
+file = "crates/horizon-client/src/game/recipe_book.rs"
+name = "fastcraft_book"
+source = "fastcraft_book.rs"
