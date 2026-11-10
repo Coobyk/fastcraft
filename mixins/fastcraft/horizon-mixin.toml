@@ -1,0 +1,40 @@
+[mod]
+id = "fastcraft"
+version = "0.1.0"
+priority = 100
+
+[compatibility]
+horizon_revision = "fdc87aecdbd116bf1e08adcd062fcbaea8c2e2ca"
+
+# A successful recipe placement (`try_place`): the click filled the grid; arm
+# the pending craft with the recipe's expected results. Covers the recipe
+# buttons, the alternatives overlay and the Enter/Space repeat of the last
+# recipe, in the inventory's 2x2 grid and the crafting table alike.
+[[injection]]
+id = "placed"
+kind = "RETURN"
+target = "horizon_client::game::recipe_book::Game<'_>::try_place"
+helper = "placed.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "entry", ty = "usize", value = "entry_index" },
+  { name = "all", ty = "bool", value = "use_max" },
+  { name = "placed", ty = "bool", value = "$value" },
+]
+
+# The armed craft fires once the result slot shows the expected item: the next
+# tick on a local world, when the server's answer lands on a remote one.
+[[injection]]
+id = "tick"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_client_tick_post"
+helper = "tick.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+]
+
+[[module]]
+id = "runtime"
+file = "crates/horizon-client/src/game.rs"
+name = "fastcraft"
+source = "fastcraft.rs"
